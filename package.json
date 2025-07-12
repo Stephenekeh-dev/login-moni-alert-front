@@ -1,6 +1,9 @@
 {
   "name": "app",
   "version": "0.0.0",
+  "vercel-build": {
+    "outputDirectory": "dist/frontend/browser"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
