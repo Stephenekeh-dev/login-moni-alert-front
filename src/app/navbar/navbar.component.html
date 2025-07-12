@@ -1,0 +1,17 @@
+<nav class="nav">
+  <div class="nav-container">
+    <div class="logo">🛡️ SecureApp</div>
+    <button class="hamburger" (click)="toggleMenu()">☰</button>
+    <ul class="menu" [class.open]="menuOpen">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="'/'">Home</a>
+      </li>
+      <li routerLinkActive="active">
+        <a [routerLink]="'/register'">Register</a>
+      </li>
+      <li routerLinkActive="active">
+        <a [routerLink]="'/login'">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>

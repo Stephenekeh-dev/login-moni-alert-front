@@ -1,0 +1,38 @@
+.title {
+  width: 100%;
+  height:7%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title h1 {
+  color: #334253;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .title h1 {
+    font-size: 1.4rem;
+    padding: 0 0rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .title h1 {
+    font-size: 1.2rem;
+    padding:0rem;
+  }
+ 
+}

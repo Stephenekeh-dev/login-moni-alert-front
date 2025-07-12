@@ -1,0 +1,20 @@
+.main {
+  width: 100%;
+  min-height: 100vh; /* makes sure it fills screen vertically */
+  padding: 0rem;
+  box-sizing: border-box;
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f9f9f9;
+}
+
+/* Responsive adjustments (optional for smaller padding on mobile) */
+@media (max-width: 768px) {
+  .main {
+     width: 100%;
+    padding: 0rem;
+  }
+}

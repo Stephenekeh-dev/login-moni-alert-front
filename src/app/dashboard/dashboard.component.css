@@ -1,0 +1,104 @@
+/* Global box-sizing for consistency */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.dashboard-container {
+  max-width: 600px;
+  margin: 25px auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Flex container for top section */
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Left side: user details */
+.user-details {
+  flex: 1;
+  min-width: 200px;
+}
+
+.user-details h3,
+.user-details p {
+  margin: 8px 0;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Right side: profile image */
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+}
+
+/* Button styling */
+button {
+  margin-top: 30px;
+  padding: 12px 24px;
+  background-color: #334253;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Error block styling */
+.error-message {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f8d7da;
+  color: #842029;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 600px) {
+  .dashboard-container {
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 0; /* optional: remove rounded corners on small screens */
+  }
+
+  .top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-image {
+   
+    height: 100px;
+    margin-top: 15px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
