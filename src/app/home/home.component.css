@@ -25,6 +25,8 @@
   }
   .desc>h1{
     width: 90%;
+    padding-left:0.7rem;
+    padding-right: 0.5rem;
     font-size: 1rem;
   }
   .content {
