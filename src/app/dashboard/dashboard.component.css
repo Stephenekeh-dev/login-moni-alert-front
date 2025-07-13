@@ -8,7 +8,7 @@
 .dashboard-container {
   max-width: 600px;
   margin: 25px auto;
-  padding: 10px;
+  padding: 24px; /* Increased from 10px */
   border: 1px solid #ddd;
   border-radius: 12px;
   background-color: #f9f9f9;
@@ -22,7 +22,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px; /* Increased from 20px */
 }
 
 /* Left side: user details */
@@ -33,9 +33,10 @@
 
 .user-details h3,
 .user-details p {
-  margin: 8px 0;
+  margin: 14px 0; /* Increased from 8px */
   color: #333;
   font-weight: 500;
+  font-size: 17px; /* Slightly larger font */
 }
 
 /* Right side: profile image */
@@ -50,7 +51,7 @@
 
 /* Button styling */
 button {
-  margin-top: 30px;
+  margin-top: 40px; /* Increased from 30px */
   padding: 12px 24px;
   background-color: #334253;
   border: none;
@@ -83,8 +84,8 @@ button:hover {
   .dashboard-container {
     width: 100%;
     margin: 10px;
-    padding: 10px;
-    border-radius: 0; /* optional: remove rounded corners on small screens */
+    padding: 16px; /* Increased padding */
+    border-radius: 0;
   }
 
   .top-row {
@@ -93,12 +94,12 @@ button:hover {
   }
 
   .profile-image {
-   
     height: 100px;
-    margin-top: 15px;
+    margin-top: 20px; /* Increased from 15px */
   }
 
   button {
-    font-size: 15px;
+    font-size: 16px; /* Increased from 15px */
+    margin-top: 30px; /* Increased spacing on mobile */
   }
 }
