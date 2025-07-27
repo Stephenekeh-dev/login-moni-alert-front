@@ -1,25 +1,28 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../service/user.service';
+import { EmailValidationService } from '../service/email-validation.service'; 
+
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
   selectedImage: File | null = null;
+  loading: boolean = false; 
 
-  constructor(
+   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private emailValidationService: EmailValidationService,
     private router: Router
-    
   ) {
     this.registerForm = this.fb.group({
       first_name: ['', Validators.required],
@@ -27,9 +30,7 @@ export class RegisterComponent {
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
-      // Note: No formControl for image, handled via file input
     });
-   
   }
 
   onFileSelected(event: Event): void {
@@ -39,36 +40,49 @@ export class RegisterComponent {
     }
   }
 
-  onSubmit(): void {
-  const formData = new FormData();
+ onSubmit(): void {
+  if (this.registerForm.invalid) return;
 
-  // Convert form values to string and append to FormData
-  for (const key in this.registerForm.value) {
-    if (Object.prototype.hasOwnProperty.call(this.registerForm.value, key)) {
-      const value = this.registerForm.value[key];
-      formData.append(key, value ? String(value) : '');
-    }
-  }
+  this.loading = true;
+  const email = this.registerForm.get('email')?.value;
 
-  // Append profile image if selected
-  if (this.selectedImage) {
-    formData.append('profile_image', this.selectedImage);
-  }
-  for (const pair of formData.entries()) {
-  console.log(`${pair[0]}:`, pair[1]);
-}
+  this.emailValidationService.validateEmail(email).subscribe({
+    next: (result) => {
+      const isDeliverable = result?.deliverability === 'DELIVERABLE';
+      const isDisposable = result?.is_disposable_email?.value === true;
 
+      if (!isDeliverable || isDisposable) {
+        alert(' Please enter a real email.');
+        this.loading = false;
+        return;
+      }
 
-  this.userService.registerUser(formData).subscribe({
-    next: (res) => {
-      console.log('User registered successfully:', res);
-      alert('Registration successful!');
-      this.registerForm.reset();
-      this.router.navigate(['/login']);
+      // Proceed with registration
+      const formData = new FormData();
+      Object.keys(this.registerForm.value).forEach(key => {
+        formData.append(key, this.registerForm.value[key]);
+      });
+
+      if (this.selectedImage) {
+        formData.append('profile_image', this.selectedImage);
+      }
+
+      this.userService.registerUser(formData).subscribe({
+        next: () => {
+          alert('Registration successful!');
+          this.registerForm.reset();
+          this.router.navigate(['/login']);
+          this.loading = false;
+        },
+        error: () => {
+          alert('Registration failed!');
+          this.loading = false;
+        }
+      });
     },
-    error: (err) => {
-      console.error('Registration failed:', err.error);
-      alert('Registration failed! Check fields.');
+    error: () => {
+      alert('Failed to validate email. Please try again.');
+      this.loading = false;
     }
   });
 }

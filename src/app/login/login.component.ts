@@ -12,12 +12,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  loading = false; // ✅ Add this line
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar // Inject MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -27,14 +28,14 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      this.loading = true; // ✅ Start loading
+
       this.userService.loginUser(this.loginForm.value).subscribe({
         next: (res) => {
           console.log('Login successful:', res);
-          
-          // ✅ Save token to localStorage
           this.userService.saveToken(res.token);
+          localStorage.setItem('user', JSON.stringify(res));
 
-          // Show Snackbar instead of alert
           this.snackBar.open('Login successful!', 'OK', {
             duration: 8000,
             panelClass: ['snackbar-success'],
@@ -42,24 +43,21 @@ export class LoginComponent {
             verticalPosition: 'top'
           });
 
-          // Store user details in localStorage
-          localStorage.setItem('user', JSON.stringify(res));
-
           this.loginForm.reset();
-         setTimeout(() => {
-        this.router.navigate(['/dashboard']);
-       }, 100);
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+            this.loading = false; // ✅ Stop loading after redirect
+          }, 100);
         },
         error: (err) => {
           console.error('Login failed:', err);
-
-          // Show error message in Snackbar
           this.snackBar.open('Invalid email or password', 'Close', {
             duration: 3000,
             panelClass: ['snackbar-error'],
             horizontalPosition: 'center',
             verticalPosition: 'top'
           });
+          this.loading = false; // ✅ Stop loading
         }
       });
     } else {

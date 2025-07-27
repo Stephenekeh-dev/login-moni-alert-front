@@ -9,7 +9,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+     "postbuild": "cp -r dist/frontend/browser/* public/"
   },
   "private": true,
   "dependencies": {
